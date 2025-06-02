@@ -21,6 +21,12 @@ client = TelegramClient(session_name, api_id, api_hash)
 def home():
     return '🤖 Telegram Group Bot is Alive!'
 
+@app.route('/send/<text>')
+def send_message(text):
+    with client:
+        client.send_message("me", text)
+    return f"✅ Message sent: {text}"
+
 @app.route('/create-group', methods=['POST'])
 def create_group():
     data = request.json
