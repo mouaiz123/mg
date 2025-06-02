@@ -23,9 +23,12 @@ def home():
 
 @app.route('/send/<text>')
 def send_message(text):
-    with client:
-        client.send_message("me", text)
-    return f"✅ Message sent: {text}"
+    try:
+        with client:
+            client.send_message("me", text)
+        return f"✅ Message sent: {text}"
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/create-group', methods=['POST'])
 def create_group():
